@@ -1,6 +1,6 @@
 Steps for project 6
 --------------------
-1) create map (use divs, canvas or tables) - [NOT YET DONE]
+1) create map (use divs, canvas or tables) - [DONE]
 2) generate random elements (2 players, some weapons,  blocks) in map - [NOT YET DONE]
 3) allow players to move on map and change turns - [NOT YET DONE]
 4) fight scene (start when both the players are beside each other on the map) - [NOT YET DONE]

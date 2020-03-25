@@ -6,14 +6,41 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <title>Metal Fighters - OpenClassrooms</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
 </head> 
 <body>
    
 <h1 class="text header">Metal Fighters</h1>
+ <div class="buttons-head">
+      <button class= "button blue">New game</button> <button class= "button yellow">Rules</button>
+ </div>
+ 
+<!--Player 1 -->
+<div>
+    <div id="player1" class="player-info">
+    <div class="text"><h2>Player 1</h2></div>
+        <img class="player-player1" src="assets/img/player1-poster.png" alt="Player-1">
+        <div class="life-points"><strong>Life points: </strong>100</div>
+        <div class="attack-power"><strong>Attack power:</strong> 10</div>
+        <div class="defence"><strong>Defence:</strong> False</div><br>
+        <button class="button red">Attack</button> <button class= "button blue">Defend</button>
+    </div>
+</div>
     
     <div id="container"></div> 
+
+<!--Player 2 -->
+<div id="player2" class="player-info">
+    <div class="text"><h2>Player 2</h2></div>
+    <img class="player-poster2" src="assets/img/player2-poster.png" alt="Player-2">
+    <div class="life-points"><strong>Life points:</strong> 100</div>
+    <div class="attack-power"><strong>Attack power:</strong> 10</div>
+    <div class="defence"><strong>Defence:</strong> False</div> <br>
+    <button class= "button red">Attack</button> <button class= "button blue">Defend</button>
+</div>
+
 
 <footer class="text">Copyright 2020 - OpenClassrooms Project 6 </footer>
 
