@@ -50,6 +50,15 @@ $(document).ready(function() {
 
    theBoard.placeElement(row, column, 'assets/img/wall.png');
 
+
+
+
+
+
+
+
+   
+   /*
    //Test randome display
    let rowPlayer1 = theBoard.randomRAC();
    let columnPlayer1 = theBoard.randomRAC();
@@ -58,7 +67,7 @@ $(document).ready(function() {
    let columnPlayer2 = theBoard.randomRAC();
    theBoard.placeElement(rowPlayer1, columnPlayer1, 'assets/img/player1.png');
    theBoard.placeElement(rowPlayer2, columnPlayer2, 'assets/img/player2.png');
-
+*/
 
 
     /*
