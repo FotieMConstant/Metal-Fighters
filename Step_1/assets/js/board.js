@@ -28,6 +28,12 @@ class Board {
         return genNumber;
     }
 
+    // Function to get cell position
+    getPosition(rowPosition, colPosition) {
+    return $(`div[data-col="${rowPosition}"][data-row="${colPosition}"]`)[0];
+    }
+
+
     //to place an alement on a spacified coordinate
     placeElement(row, col, element){
     $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
@@ -37,7 +43,7 @@ class Board {
 }
 
 
-// create a 16x16 grid when the page loads
+// On page load function
 $(document).ready(function() {
 
     theBoard = new Board(10);
@@ -45,8 +51,10 @@ $(document).ready(function() {
 
    let row = theBoard.randomRAC();
    let column = theBoard.randomRAC();
-   console.log(row);
-   console.log(column);
+//    console.log(row);
+//    console.log(column);
+
+    
 
    theBoard.placeElement(row, column, 'assets/img/wall.png');
 
