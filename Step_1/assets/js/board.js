@@ -6,7 +6,7 @@ class Board {
     constructor(grid_nb){
         this.nb_grids = grid_nb;
         this.map = [];
-        this.waeponsStore = {};
+        this.weaponsStore = {};
         this.playerStore = {};
         this.currentTurn = null;
     }
@@ -17,6 +17,7 @@ class Board {
             for (var columns = 0; columns < this.nb_grids; columns++) {
                 $("#container").append('<div id="grid_'+columns+'_'+rows+'" class="grid"></div>');
                 this.map[rows][columns] = {
+                    element: null,
                     block: null, 
                     player: null, 
                     playerName: '',
@@ -48,95 +49,136 @@ class Board {
     }
 
 
-    //to place an alement on a spacified coordinate
-    placeElement(row, col, element, type){
-        if (type == 'block'){
+    //to place a block element on a spacified coordinate
+    placeBlockElement(row, col, element){
+        //also need to check if weapons/players are not placed
+        if (this.map[row][col].element != true){
             this.map[row][col].block = true;
+            this.map[row][col].element = true;  
+            $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
         }
-        else if (type == 'weapon'){
-           this.map[row][col].weapon = true;
-           this.map[row][col].weaponName = ''; //name of weapon
-       } 
-       else if (type == 'player'){
-           this.map[row][col].player = true;
-           this.map[row][col].playerName = ''; //name of player
-       } 
-       $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
-
+        else {
+           this.placeBlockElement(theBoard.randomRAC(), theBoard.randomRAC(), element);  
+        }
     }
     
+    //to place a weapon element on a spacified coordinate
+    placeWeaponElement(row, col, element, key){
+        //also need to check if weapons/players are not placed
+        if (this.map[row][col].element != true){
+            this.map[row][col].weapon = true;
+            this.map[row][col].weaponName = '';//something
+            this.map[row][col].element = true;  
+            //please update weapon store
+            this.weaponsStore[key].position = {row: row, col: col};
+            $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
+        }
+        else {
+           this.placeWeaponElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key)   
+        }
+    }
+	
+	placePlayerElement(row, col, element, key){
+        //also need to check if weapons/players are not placed
+        if (this.map[row][col].element != true){
+            this.map[row][col].palyer = true;
+            this.map[row][col].playerName = key;//something
+            this.map[row][col].element = true;  
+            //please update weapon store
+			let player = this.playerStore.find((player) => player.name == key)
+            player.position = {row: row, col: col};
+            $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
+        }
+        else {
+           this.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key)   
+        }
+    }
+    
+    
 
-    createWeaponsStore = () => {
+ createWeaponsStore = () => {
         //update waeponsStore to have  multiple  key with values as objects. the name of the keys will be weapon names. the values   will hold details of the weapon
         // like attack, defend Initially set them to null
-       let  weapon = [
-           {
-            key: 'knife',
-            position: null,
-            damage: 5
-          },
-          {
-            key: 'gun',
-            position: null,
-            damage: 50
-          },
-          {
-            key: 'axe',
-            position: null,
-            damage: 40
-          },
-          {
-            key: 'fork',
-            position: null,
-            damage: 30
-          },
-           {
-            key: 'swords',
-            position: null,
-            damage: 20
-          },
-        ];
+   
+    
+    this.weaponsStore = {
+        knife: {
+            position: {row: null, col: null},
+            damage: 5,
+            image: 'assets/img/weapons/knife.PNG'
+        },
+        gun: {
+            position: {row: null, col: null},
+            damage: 50,
+            image: 'assets/img/weapons/gun.PNG'
+        },    
+        axe: {
+            position: {row: null, col: null},
+            damage: 40,
+            image: 'assets/img/weapons/axe.PNG'
+        },
+        swords: {
+            position: {row: null, col: null},
+            damage: 20,
+            image: 'assets/img/weapons/sword.PNG'
+        },
+        fork: {
+            position: {row: null, col: null},
+            damage: 20,
+            image: 'assets/img/weapons/fork.PNG'
+        },
     }
+ }
     createPlayerStore = () => {
         //update playerStore to have two key with values as objects. those will hold details of the player
         // like player attack, defend, position etc. Initially set them to null
+		
+		this.playerStore = [{
+		   name: 'Player1', 
+		   image: 'assets/img/players/player1.png',
+		   position: {row: null, col: null},
+		},
+		{
+		   name: 'Player2', 
+		   image: 'assets/img/players/player2.png',
+		   position: {row: null, col: null},
+		},
+		]
     }
-
 }
 
 
-
+//The main
 // On page load function
 $(document).ready(function() {
 
+    //initializing the Board class
     theBoard = new Board(10);
     theBoard.createGrid();
 
-   let row = theBoard.randomRAC();
-   let column = theBoard.randomRAC();
-   theBoard.createWeaponsStore(); 
-   theBoard.createPlayerStore();
-
+   theBoard.createWeaponsStore(); //Calling the Weapon store function in my class
+   console.log(theBoard.weaponsStore);
+   //Looping to display weapons on map 
+   for (var weapon in theBoard.weaponsStore){
+       theBoard.placeWeaponElement(theBoard.randomRAC(), theBoard.randomRAC(), theBoard.weaponsStore[weapon].image, weapon); 
+   }  
+   
+   theBoard.createPlayerStore(); //Calling the Player store in my class
+   theBoard.playerStore.forEach(player => {
+	  theBoard.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), player.image, player.name); 
+   })
     
-    function placeWall(){
-        const colPosition = theBoard.randomRAC();
-        const rowPosition = theBoard.randomRAC();
-        const position = {
-            col: colPosition,
-            row: rowPosition,
-         }
-    theBoard.placeElement(position.row, position.col, 'assets/img/wall.png', 'block');
-}
-//Calling for  the place wall function
- placeWall();
- 
+    for(var i = 1; i<=7; i++){
+        theBoard.placeBlockElement(theBoard.randomRAC(), theBoard.randomRAC(), 'assets/img/wall.png');
+    }
 
-
+//Event listener for my map
    $('#container').click((e) => {
     e.preventDefault();
     let elementId = e.target.id
-    let clickedRow = elementId.split['_'][1]
-    let clickedColumn = elementId.split['_'][2]
+    let clickedRow = elementId.split('_')[1]
+    let clickedColumn = elementId.split('_')[2]
+	console.log(`Row is ${clickedRow}, Column is ${clickedColumn}`)
 })
 
    
