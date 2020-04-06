@@ -15,7 +15,7 @@ class Board {
         for (var rows = 0; rows < this.nb_grids; rows++) {
             this.map[rows] = [];
             for (var columns = 0; columns < this.nb_grids; columns++) {
-                $("#container").append('<div id="grid_'+columns+'_'+rows+'" class="grid"></div>');
+                $("#container").append('<div id="grid_'+rows+'_'+columns+'" class="grid"></div>');
                 this.map[rows][columns] = {
                     element: null,
                     block: null, 
@@ -67,7 +67,7 @@ class Board {
         //also need to check if weapons/players are not placed
         if (this.map[row][col].element != true){
             this.map[row][col].weapon = true;
-            this.map[row][col].weaponName = '';//something
+            this.map[row][col].weaponName = key;//something
             this.map[row][col].element = true;  
             //please update weapon store
             this.weaponsStore[key].position = {row: row, col: col};
@@ -81,10 +81,11 @@ class Board {
 	placePlayerElement(row, col, element, key){
         //also need to check if weapons/players are not placed
         if (this.map[row][col].element != true){
-            this.map[row][col].palyer = true;
+            this.map[row][col].player = true;
             this.map[row][col].playerName = key;//something
             this.map[row][col].element = true;  
-            //please update weapon store
+            console.log(this.map);// Printing the map in a 2D array
+            //please update player store
 			let player = this.playerStore.find((player) => player.name == key)
             player.position = {row: row, col: col};
             $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
@@ -99,8 +100,6 @@ class Board {
  createWeaponsStore = () => {
         //update waeponsStore to have  multiple  key with values as objects. the name of the keys will be weapon names. the values   will hold details of the weapon
         // like attack, defend Initially set them to null
-   
-    
     this.weaponsStore = {
         knife: {
             position: {row: null, col: null},
@@ -145,7 +144,148 @@ class Board {
 		},
 		]
     }
-}
+
+    //Display up moves
+    PossibleMoveUp(){
+       let player = this.playerStore;
+       
+       for(var p in player){
+       let row = player[p].position.row;
+       let col = player[p].position.col;
+
+       if (this.map[row][col].player == true){
+        console.log("up moves");
+
+        //Looping to display movable spots
+        for(let i = 1; i <= 3; i++){
+            row = row-1; // Reducing the value of row because up means minus but on the same col
+            if(row < 0){
+                break;//Break loop if we are out of the map, that is less than 0
+            }
+            // If there's a block or player in the grid, i break
+            if(this.map[row][col].block == true || this.map[row][col].player == true){
+                    break;
+                }
+                if(this.map[row][col].weapon != true){
+                 //If there's no weapon i highlight the box
+                    $("#grid_"+row+"_"+col).css("background","#fcf75e");
+                }else{
+                    //If there's a weapon on the way i apply special css
+                $("#grid_"+row+"_"+col).css("box-shadow","inset 0 0 0 2000px rgba(243, 255, 67, 0.3)");
+               
+                }  
+        }
+       }
+    }       
+    }
+
+ //Display up moves
+ PossibleMoveDown(){
+    let player = this.playerStore;
+    
+    for(var p in player){
+    let row = player[p].position.row;
+    let col = player[p].position.col;
+
+    if (this.map[row][col].player == true){
+     console.log("Down moves");
+
+     //Looping to display movable spots
+     for(let i = 1; i <= 3; i++){
+         row = row+1; //Increasing the value of rows because down mean plus but on the same col
+         if(row >= 10){
+             break;//Break loop if we move out of the map that is, more than or equal to 10
+         }
+         // If there's a block or player in the grid, i break
+         if(this.map[row][col].block == true || this.map[row][col].player == true){
+                 break;
+             }
+             if(this.map[row][col].weapon != true){
+                 //If there's no weapon i highlight the box
+                 $("#grid_"+row+"_"+col).css("background","#fcf75e");
+             }else{
+              //If there's a weapon on the way i apply special css
+             $("#grid_"+row+"_"+col).css("box-shadow","inset 0 0 0 2000px rgba(243, 255, 67, 0.3)");
+            
+             }  
+     }
+    }
+ }       
+ }
+
+
+ //Display up moves
+ PossibleMoveLeft(){
+    let player = this.playerStore;
+    
+    for(var p in player){
+    let row = player[p].position.row;
+    let col = player[p].position.col
+
+    if (this.map[row][col].player == true){
+     console.log("Left moves");
+
+     //Looping to display movable spots
+     for(let i = 1; i <= 3; i++){
+         col = col-1; //Reducing instead the value of col here because, Left means minus col but on the same row
+         if(col < 0){
+             break;//Break if col is less than 0, that is goes out of the map
+         }
+         // If there's a block or player in the grid, i break
+         if(this.map[row][col].block == true || this.map[row][col].player == true){
+                 break;
+             }
+             //If there's no weapon i highlight the box
+             if(this.map[row][col].weapon != true){
+                 $("#grid_"+row+"_"+col).css("background","#fcf75e");
+             }else{
+                 //If there's a weapon on the way i apply special css
+             $("#grid_"+row+"_"+col).css("box-shadow","inset 0 0 0 2000px rgba(243, 255, 67, 0.3)");
+             }  
+     }
+    }
+ }       
+ }
+
+ 
+ //Display up moves
+ PossibleMoveRight(){
+    let player = this.playerStore;
+    
+    for(var p in player){
+    let row = player[p].position.row;
+    let col = player[p].position.col
+
+    if (this.map[row][col].player == true){
+     console.log("Right moves");
+
+     //Looping to display movable spots
+     for(let i = 1; i <= 3; i++){
+         col = col+1; //Increasing the value of col because right means plus but on the same row
+         if(col >= 10){
+             break; //Break loop if we move out of the map that is, more than or equal to 10
+         }
+         // If there's a block or player in the grid, i break
+         if(this.map[row][col].block == true || this.map[row][col].player == true){
+                 break;
+             }
+              //If there's no weapon i highlight the box
+             if(this.map[row][col].weapon != true){
+                 $("#grid_"+row+"_"+col).css("background","#fcf75e");
+             }else{
+                 //If there's a weapon on the way i apply special css
+             $("#grid_"+row+"_"+col).css("box-shadow","inset 0 0 0 2000px rgba(243, 255, 67, 0.3)");
+             }  
+     }
+    }
+ }       
+ }
+
+
+}//end of class
+
+
+
 
 
 //The main
@@ -168,9 +308,16 @@ $(document).ready(function() {
 	  theBoard.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), player.image, player.name); 
    })
     
+   //Loop to display 7 block
     for(var i = 1; i<=7; i++){
         theBoard.placeBlockElement(theBoard.randomRAC(), theBoard.randomRAC(), 'assets/img/wall.png');
     }
+
+    //Possible moves for player
+    theBoard.PossibleMoveUp();
+    theBoard.PossibleMoveDown();
+    theBoard.PossibleMoveLeft();
+    theBoard.PossibleMoveRight();
 
 //Event listener for my map
    $('#container').click((e) => {
@@ -178,7 +325,8 @@ $(document).ready(function() {
     let elementId = e.target.id
     let clickedRow = elementId.split('_')[1]
     let clickedColumn = elementId.split('_')[2]
-	console.log(`Row is ${clickedRow}, Column is ${clickedColumn}`)
+    console.log(`Row is ${clickedRow}, Column is ${clickedColumn}`);
+   
 })
 
    
