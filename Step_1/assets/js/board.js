@@ -146,13 +146,14 @@ class Board {
     }
 
     //Display up moves
-    PossibleMoveUp(){
+    PossibleMoveUp(currenPlayer){
        let player = this.playerStore;
        
-       for(var p in player){
-       let row = player[p].position.row;
-       let col = player[p].position.col;
 
+       let row = player[currenPlayer].position.row;
+       let col = player[currenPlayer].position.col;
+        this.currentTurn = player[currenPlayer].name;
+        
        if (this.map[row][col].player == true){
         console.log("up moves");
 
@@ -176,16 +177,17 @@ class Board {
                 }  
         }
        }
-    }       
+       
     }
 
  //Display up moves
- PossibleMoveDown(){
+ PossibleMoveDown(currenPlayer){
     let player = this.playerStore;
     
-    for(var p in player){
-    let row = player[p].position.row;
-    let col = player[p].position.col;
+    
+    let row = player[currenPlayer].position.row;
+    let col = player[currenPlayer].position.col;
+    this.currentTurn = player[currenPlayer].name;
 
     if (this.map[row][col].player == true){
      console.log("Down moves");
@@ -210,17 +212,18 @@ class Board {
              }  
      }
     }
- }       
+     
  }
 
 
  //Display up moves
- PossibleMoveLeft(){
+ PossibleMoveLeft(currenPlayer){
     let player = this.playerStore;
     
-    for(var p in player){
-    let row = player[p].position.row;
-    let col = player[p].position.col
+    
+    let row = player[currenPlayer].position.row;
+       let col = player[currenPlayer].position.col;
+        this.currentTurn = player[currenPlayer].name;
 
     if (this.map[row][col].player == true){
      console.log("Left moves");
@@ -244,17 +247,18 @@ class Board {
              }  
      }
     }
- }       
+      
  }
 
  
  //Display up moves
- PossibleMoveRight(){
+ PossibleMoveRight(currenPlayer){
     let player = this.playerStore;
     
-    for(var p in player){
-    let row = player[p].position.row;
-    let col = player[p].position.col
+   
+    let row = player[currenPlayer].position.row;
+    let col = player[currenPlayer].position.col;
+    this.currentTurn = player[currenPlayer].name;
 
     if (this.map[row][col].player == true){
      console.log("Right moves");
@@ -278,7 +282,7 @@ class Board {
              }  
      }
     }
- }       
+      
  }
 
 
@@ -314,10 +318,11 @@ $(document).ready(function() {
     }
 
     //Possible moves for player
-    theBoard.PossibleMoveUp();
-    theBoard.PossibleMoveDown();
-    theBoard.PossibleMoveLeft();
-    theBoard.PossibleMoveRight();
+    theBoard.PossibleMoveUp(0);
+    theBoard.PossibleMoveDown(0);
+    theBoard.PossibleMoveLeft(0);
+    theBoard.PossibleMoveRight(0);
+    console.log(theBoard.currentTurn);
 
 //Event listener for my map
    $('#container').click((e) => {
