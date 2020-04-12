@@ -93,7 +93,21 @@ class Board {
             $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
         }
         else {
-           this.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key)   
+            if(this.map[row][col].weapon){
+                this.map[row][col].player = true;
+                this.map[row][col].playerName = key;//something
+                this.map[row][col].element = true;
+                this.map[row][col].weapon = true;
+                console.log(this.map);// Printing the map in a 2D array
+                //please update player store
+                let player = this.playerStore.find((player) => player.name == key)
+                player.position = {row: row, col: col};
+                $("#grid_"+row+"_"+col+"").css("background-color",""); // Initialize the background to null
+                $("#grid_"+row+"_"+col).css("box-shadow",""); // In case there's a weapon also set the box-shadow to null (When player crosses weapon)
+                $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
+            }else{
+            this.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key);  
+            }
         }
     }
     
@@ -190,8 +204,6 @@ class Board {
  //Display up moves
  PossibleMoveDown(){
 
-    
-    
     let currentPlayer = this.playerStore.find((playerObj) => {return playerObj.name == this.currentTurn })
 
     let row = currentPlayer.position.row;
@@ -298,12 +310,150 @@ class Board {
       
  }
 
+
+ // Remove possible moves when player plays
+  //Remove Display up moves
+  removePossibleMoveUp = ()=>{
+        
+    let currentPlayer = this.playerStore.find((playerObj) => {return playerObj.name == this.currentTurn })
+
+    let row = currentPlayer.position.row;
+    let col = currentPlayer.position.col;
+  
+
+     //Looping to display movable spots
+     for(let i = 1; i <= 3; i++){
+         row = row-1; // Reducing the value of row because up means minus but on the same col
+         if(row < 0){
+             break;//Break loop if we are out of the map, that is less than 0
+         }
+         // If there's a block or player in the grid, i break
+         if(this.map[row][col].block == true || this.map[row][col].player == true){
+                 break;
+             }
+             if(this.map[row][col].weapon != true){
+              //If there's no weapon i highlight the box
+              this.map[row][col].movable = false;
+                 $("#grid_"+row+"_"+col).css("background","");
+             }else{
+                 //If there's a weapon on the way i apply special css
+                 this.map[row][col].movable = false;
+             $("#grid_"+row+"_"+col).css("box-shadow","");
+            
+             }  
+     }
+ }
+
+ //Remove Display Down moves
+ removePossibleMoveDown = () => {
+      
+    let currentPlayer = this.playerStore.find((playerObj) => {return playerObj.name == this.currentTurn })
+
+    let row = currentPlayer.position.row;
+    let col = currentPlayer.position.col;
+
+
+     //Looping to display movable spots
+     for(let i = 1; i <= 3; i++){
+         row = row+1; //Increasing the value of rows because down mean plus but on the same col
+         if(row >= 10){
+             break;//Break loop if we move out of the map that is, more than or equal to 10
+         }
+         // If there's a block or player in the grid, i break
+         if(this.map[row][col].block == true || this.map[row][col].player == true){
+                 break;
+             }
+             if(this.map[row][col].weapon != true){
+                 //If there's no weapon i highlight the box
+                 this.map[row][col].movable = false;
+                 $("#grid_"+row+"_"+col).css("background","");
+             }else{
+              //If there's a weapon on the way i apply special css
+              this.map[row][col].movable = false;
+             $("#grid_"+row+"_"+col).css("box-shadow","");
+            
+             }  
+     }
+     
+ }
+
+ //Remove Display up moves
+ removePossibleMoveLeft = () => {
+    
+    let currentPlayer = this.playerStore.find((playerObj) => {return playerObj.name == this.currentTurn })
+
+    let row = currentPlayer.position.row;
+    let col = currentPlayer.position.col;
+
+     //Looping to display movable spots
+     for(let i = 1; i <= 3; i++){
+         col = col-1; //Reducing instead the value of col here because, Left means minus col but on the same row
+         if(col < 0){
+             break;//Break if col is less than 0, that is goes out of the map
+         }
+         // If there's a block or player in the grid, i break
+         if(this.map[row][col].block == true || this.map[row][col].player == true){
+                 break;
+             }
+             //If there's no weapon i highlight the box
+             if(this.map[row][col].weapon != true){
+                this.map[row][col].movable = false;
+                 $("#grid_"+row+"_"+col).css("background","");
+             }else{
+                 //If there's a weapon on the way i apply special css
+                 this.map[row][col].movable = false;
+             $("#grid_"+row+"_"+col).css("box-shadow","");
+             }  
+     }
+   
+ }
+
+//Display up moves
+removePossibleMoveRight = () => {
+
+    let currentPlayer = this.playerStore.find((playerObj) => {return playerObj.name == this.currentTurn })
+
+    let row = currentPlayer.position.row;
+    let col = currentPlayer.position.col;
+
+     //Looping to display movable spots
+     for(let i = 1; i <= 3; i++){
+         col = col+1; //Increasing the value of col because right means plus but on the same row
+         if(col >= 10){
+             break; //Break loop if we move out of the map that is, more than or equal to 10
+         }
+         // If there's a block or player in the grid, i break
+         if(this.map[row][col].block == true || this.map[row][col].player == true){
+                 break;
+             }
+              //If there's no weapon i highlight the box
+             if(this.map[row][col].weapon != true){
+                this.map[row][col].movable = false;
+                 $("#grid_"+row+"_"+col).css("background","");
+             }else{
+                 //If there's a weapon on the way i apply special css
+                 this.map[row][col].movable = false;
+             $("#grid_"+row+"_"+col).css("box-shadow","");
+             }  
+     }
+
+      
+ }
+
 //Calculate movable cells of current player
  calculateMovableCells = () => {
     this.PossibleMoveUp();
     this.PossibleMoveDown();
     this.PossibleMoveLeft();
     this.PossibleMoveRight();
+}
+
+//Calculate previous cells of current player
+calculateRemovableMovableCells = () =>{
+    this.removePossibleMoveUp();
+    this.removePossibleMoveDown();
+    this.removePossibleMoveLeft();
+    this.removePossibleMoveRight();
 }
 
 //Clearing the previous player's position on the map
@@ -321,8 +471,9 @@ clearCell = () => {
         weaponName: '',
         movableFor: '', //store player name here
     }
-   
-     
+
+    $("#grid_"+row+"_"+col).css("background",""); //Removing the player from previous cell
+    this.calculateRemovableMovableCells();
 
     console.log("Cell to be cleared "+currentPlayer.position.row+" and "+currentPlayer.position.col);
 }
