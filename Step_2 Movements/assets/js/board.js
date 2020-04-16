@@ -43,11 +43,6 @@ class Board {
         return genNumber;
     }
 
-    // Function to get cell position
-    getPosition(rowPosition, colPosition) {
-    return $(`div[data-col="${rowPosition}"][data-row="${colPosition}"]`)[0];
-    }
-
 
     //to place a block element on a spacified coordinate
     placeBlockElement(row, col, element){
@@ -86,22 +81,50 @@ class Board {
             this.map[row][col].element = true;  
             console.log(this.map);// Printing the map in a 2D array
             //please update player store
-			let player = this.playerStore.find((player) => player.name == key)
+			let player = this.playerStore.find((player) => player.name == key);
             player.position = {row: row, col: col};
             $("#grid_"+row+"_"+col+"").css("background-color",""); // Initialize the background to null
             $("#grid_"+row+"_"+col).css("box-shadow",""); // In case there's a weapon also set the box-shadow to null (When player crosses weapon)
             $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
         }
         else {
+            //This if is for when the player is in movement and falls on a weapon
             if(this.map[row][col].weapon){
                 this.map[row][col].player = true;
                 this.map[row][col].playerName = key;//something
                 this.map[row][col].element = true;
                 this.map[row][col].weapon = true;
-                console.log(this.map);// Printing the map in a 2D array
+               
                 //please update player store
-                let player = this.playerStore.find((player) => player.name == key)
+                let player = this.playerStore.find((player) => player.name == key);
                 player.position = {row: row, col: col};
+
+
+
+                //Demo code to update player attack with picked weapon and update display as well
+                let playersPreviousAttack = player.attack;
+                let playersAttack = player.attack;
+                console.log("Previous attack is "+playersPreviousAttack);
+
+                //Looping to get the weapon damages from the weapon store and updates the player's attack
+              for(let weapon in this.weaponsStore){
+                  if(weapon == this.map[row][col].weaponName){
+                    playersAttack = this.weaponsStore[weapon].damage;
+                    break;
+                  }
+              }
+              //comparing previous attack  to display it's image in the cell
+              for(let weapon in this.weaponsStore){
+              if(playersPreviousAttack == this.weaponsStore[weapon].damage){
+                $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + this.weaponsStore[weapon].image + ')');
+                break;
+              }
+            }
+              console.log("New attack is picked "+playersAttack);
+
+            //End of demo code here
+
+
                 $("#grid_"+row+"_"+col+"").css("background-color",""); // Initialize the background to null
                 $("#grid_"+row+"_"+col).css("box-shadow",""); // In case there's a weapon also set the box-shadow to null (When player crosses weapon)
                 $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
@@ -174,7 +197,7 @@ class Board {
      
         
        if (this.map[row][col].player == true){
-        console.log("up moves");
+
 
         //Looping to display movable spots
         for(let i = 1; i <= 3; i++){
@@ -210,7 +233,6 @@ class Board {
     let col = currentPlayer.position.col;
 
     if (this.map[row][col].player == true){
-     console.log("Down moves");
 
      //Looping to display movable spots
      for(let i = 1; i <= 3; i++){
@@ -247,7 +269,6 @@ class Board {
     let col = currentPlayer.position.col;
 
     if (this.map[row][col].player == true){
-     console.log("Left moves");
 
      //Looping to display movable spots
      for(let i = 1; i <= 3; i++){
@@ -284,7 +305,6 @@ class Board {
     let col = currentPlayer.position.col;
 
     if (this.map[row][col].player == true){
-     console.log("Right moves");
 
      //Looping to display movable spots
      for(let i = 1; i <= 3; i++){
