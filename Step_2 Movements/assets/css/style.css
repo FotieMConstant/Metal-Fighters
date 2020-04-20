@@ -1,6 +1,7 @@
 
 body{
-	min-width: 1220px;
+  min-width: 1220px;
+
 }
 /* Grid styling */
 #container {
@@ -30,10 +31,7 @@ body{
 .text.header{
     font-size: 300%;
 }
-.buttons-head{
-	text-align: center;
-	padding: 2%;
-}
+
 .player-info{
 	text-align: center;
 }
@@ -215,9 +213,7 @@ body{
   background-image: linear-gradient(top, #c4a07c, #886440);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c4a07c', endColorstr='#886440', GradientType=0);
   }
-  .grey{
-	
-  }
+
   .sand{
 	text-shadow: 0px 1px 0px #fffff3;
   color: #a79d67;
@@ -287,4 +283,48 @@ body{
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8ffff', endColorstr='#7ce1ca', GradientType=0);
   border-color: #9AFFE8 #7ce1ca #7ce1ca #9AFFE8;
   border-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.25);
+  }
+  
+  .disabled{
+    cursor: not-allowed;
+    opacity: .6;
+  }
+
+  /* Weapons display to user with damages*/
+
+  .weapons li{
+    display: inline-block;
+    padding: 5px;
+    
+  }
+  .weapons li img{
+    width: 50px;
+    height: 50px;
+  }
+  .weapons{
+    width: 550px;
+    margin-top: 2px;
+    box-shadow: 0px 2px 6px gray;
+    margin-left: 302px;
+    text-align: center;
+    cursor: default;
+    transition: 1s;
+  }
+  .weapons:hover{
+    box-shadow: 0px 2px 10px gray;
+    transition: 1s;
+  }
+  #new-game{
+    float: left;
+    margin-left: 180px;
+    margin-top: 50px;
+  }
+  #rules{
+    float: right;
+    margin-right: 220px;
+    margin-top: 50px;
+
+  }
+  .header{
+    margin-left: 30px;
   }

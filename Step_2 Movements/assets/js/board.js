@@ -83,6 +83,7 @@ class Board {
             //please update player store
 			let player = this.playerStore.find((player) => player.name == key);
             player.position = {row: row, col: col};
+            console.log(player.name+" has attack "+player.attack);
             $("#grid_"+row+"_"+col+"").css("background-color",""); // Initialize the background to null
             $("#grid_"+row+"_"+col).css("box-shadow",""); // In case there's a weapon also set the box-shadow to null (When player crosses weapon)
             $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + element + ')');
@@ -92,36 +93,30 @@ class Board {
             if(this.map[row][col].weapon){
                 this.map[row][col].player = true;
                 this.map[row][col].playerName = key;//something
-                this.map[row][col].element = true;
-                this.map[row][col].weapon = true;
-               
+                // this.map[row][col].element = true;
+                // this.map[row][col].weapon = true;
+                console.log(this.map);// Printing the map in a 2D array
+
                 //please update player store
                 let player = this.playerStore.find((player) => player.name == key);
                 player.position = {row: row, col: col};
 
 
+                console.log("---> You just walked on a weapon!");
 
                 //Demo code to update player attack with picked weapon and update display as well
-                let playersPreviousAttack = player.attack;
-                let playersAttack = player.attack;
-                console.log("Previous attack is "+playersPreviousAttack);
+        
+               
 
                 //Looping to get the weapon damages from the weapon store and updates the player's attack
               for(let weapon in this.weaponsStore){
                   if(weapon == this.map[row][col].weaponName){
-                    playersAttack = this.weaponsStore[weapon].damage;
+                    player.attack = this.weaponsStore[weapon].damage;
                     break;
                   }
               }
-              //comparing previous attack  to display it's image in the cell
-              for(let weapon in this.weaponsStore){
-              if(playersPreviousAttack == this.weaponsStore[weapon].damage){
-                $("#grid_"+row+"_"+col+"").css('background-image', 'url(' + this.weaponsStore[weapon].image + ')');
-                break;
-              }
-            }
-              console.log("New attack is picked "+playersAttack);
-
+            
+              console.log(player.name+" has picked new attack "+player.attack);
             //End of demo code here
 
 
@@ -174,7 +169,7 @@ class Board {
 		this.playerStore = [{
 		   name: 'Player1', 
            image: 'assets/img/players/player1.png',
-           attack: 50,
+           attack: 10,
 		   position: {row: null, col: null},
 		},
 		{
@@ -495,7 +490,6 @@ clearCell = () => {
     $("#grid_"+row+"_"+col).css("background",""); //Removing the player from previous cell
     this.calculateRemovableMovableCells();
 
-    console.log("Cell to be cleared "+currentPlayer.position.row+" and "+currentPlayer.position.col);
 }
 
 
@@ -535,7 +529,11 @@ $(document).ready(function() {
     //Possible moves for player
     theBoard.calculateMovableCells();
     
-
+    //Onclick regenerates map
+    $('#new-game').click(function() {
+        location.reload();
+        console.log("Reloading map");
+    });
 //Event listener for my map
    $('#container').click((e) => {
     e.preventDefault();
@@ -547,6 +545,23 @@ $(document).ready(function() {
         
         theBoard.clearCell(); // Clearing the previous player's position on the map
         let currentPlayer = theBoard.playerStore.find((playerObj) => {return playerObj.name == theBoard.currentTurn });
+        
+        //----------------------DROP PREVIOUS WEAPON LOGIC---------------------
+        
+        if (theBoard.map[clickedRow][clickedColumn].weapon && !currentPlayer.weaponName){
+            currentPlayer.weaponName = theBoard.map[clickedRow][clickedColumn].weaponName
+            //currentPlayer.damage +=  theBoard.weaponsStore[theBoard.map[clickedRow][clickedColumn].weaponName].damage 
+            currentPlayer.weaponPosition = {row: clickedRow, col: clickedColumn}
+        }
+        else if (theBoard.map[clickedRow][clickedColumn].weapon && currentPlayer.weaponName) {
+            let oldWeaponName = currentPlayer.weaponName
+            let oldWeaponPosition = currentPlayer.weaponPosition
+            currentPlayer.weaponName = theBoard.map[clickedRow][clickedColumn].weaponName;
+            theBoard.placeWeaponElement(oldWeaponPosition.row, oldWeaponPosition.col, theBoard.weaponsStore[oldWeaponName].image, oldWeaponName);
+        }
+
+
+        //----------------------DROP PREVIOUS WEAPON LOGIC ENDS---------------------
         //allow player to move
         theBoard.placePlayerElement(parseInt(clickedRow), parseInt(clickedColumn), currentPlayer.image, currentPlayer.name);
         //update player position.

@@ -13,9 +13,39 @@
 <body>
    
 <h1 class="text header">Metal Fighters</h1>
- <div class="buttons-head">
-      <button class= "button blue">New game</button> <button class= "button yellow">Rules</button>
- </div>
+<div class="header">
+<button id="new-game" class= "button blue" title="Start new game">New game</button>
+<button id="rules" class= "button yellow" title="View game rule">Game rules</button>
+
+          <ul class="weapons">
+              <li>
+                <div class="name">Axe</div>
+                  <img src="assets/img/weapons/axe.png" alt="axe">
+                  <div class="damage">Damage: 40</div>
+              </li>
+              <li>
+                <div class="name">Fork</div>
+                  <img src="assets/img/weapons/fork.png" alt="axe">
+                  <div class="damage">Damage: 10</div>
+              </li>
+              <li>
+                <div class="name">Gun</div>
+                  <img src="assets/img/weapons/gun.png" alt="axe">
+                  <div class="damage">Damage: 50</div>
+              </li>
+              <li>
+                <div class="name">Knife</div>
+                  <img src="assets/img/weapons/knife.png" alt="axe">
+                  <div class="damage">Damage: 5</div>
+              </li>
+              <li>
+                <div class="name">Sword</div>
+                  <img src="assets/img/weapons/sword.png" alt="axe">
+                  <div class="damage">Damage: 20</div>
+              </li>
+          </ul>
+      
+        </div>   
  
 <!--Player 1 -->
 <div>
@@ -25,7 +55,7 @@
         <div class="life-points"><strong>Life points: </strong>100</div>
         <div class="attack-power"><strong>Attack power:</strong> 10</div>
         <div class="defence"><strong>Defence:</strong> False</div><br>
-        <button class="button red">Attack</button> <button class= "button blue">Defend</button>
+        <button class="button red disabled" disabled>Attack</button> <button class= "button blue disabled" disabled>Defend</button>
     </div>
 </div>
     
@@ -38,7 +68,7 @@
     <div class="life-points"><strong>Life points:</strong> 100</div>
     <div class="attack-power"><strong>Attack power:</strong> 10</div>
     <div class="defence"><strong>Defence:</strong> False</div> <br>
-    <button class= "button red">Attack</button> <button class= "button blue">Defend</button>
+    <button class= "button red disabled" disabled>Attack</button> <button class= "button blue disabled" disabled>Defend</button>
 </div>
 
 
