@@ -137,7 +137,7 @@ class Board {
     this.weaponsStore = {
         knife: {
             position: {row: null, col: null},
-            damage: 5,
+            damage: 30,
             image: 'assets/img/weapons/knife.PNG'
         },
         gun: {
@@ -169,12 +169,12 @@ class Board {
 		this.playerStore = [{
 		   name: 'Player1', 
            image: 'assets/img/players/player1.png',
-           attack: 10,
+           attack: 5,
 		   position: {row: null, col: null},
 		},
 		{
            name: 'Player2',
-           attack: 10, 
+           attack: 5, 
 		   image: 'assets/img/players/player2.png',
 		   position: {row: null, col: null},
 		},
