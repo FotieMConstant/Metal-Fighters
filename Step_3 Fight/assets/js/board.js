@@ -675,8 +675,7 @@ $(document).ready(function() {
         console.log(`Row is ${clickedRow}, Column is ${clickedColumn}`);
         theBoard.currentTurn = theBoard.currentTurn == 'Player1' ? 'Player2' : 'Player1';
         theBoard.calculateMovableCells();
-        
-
+        s
     }   
 })
 
