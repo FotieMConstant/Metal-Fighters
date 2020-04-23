@@ -102,22 +102,29 @@ class Board {
                 player.position = {row: row, col: col};
 
 
-                console.log("---> You just walked on a weapon!");
-
-                //Demo code to update player attack with picked weapon and update display as well
-        
+                console.log("---> You just walked on a weapon!");        
                
-
-                //Looping to get the weapon damages from the weapon store and updates the player's attack
+                let weaponImg;// To store the damage's image
+                //Looping to get the weapon damages from the weapon store
+                //To update the player's attack
               for(let weapon in this.weaponsStore){
                   if(weapon == this.map[row][col].weaponName){
                     player.attack = this.weaponsStore[weapon].damage;
+                    weaponImg = this.weaponsStore[weapon].image;
                     break;
                   }
               }
             
               console.log(player.name+" has picked new attack "+player.attack);
-            //End of demo code here
+              
+              //Updating the ui with the new weapon picked
+              if (player.name == "Player1") {
+                  $(".attack-power-player1").text(player.attack);
+                  $(".attack-weapon-player1").css('background-image', 'url(' + weaponImg + ')');
+              }else if(player.name == "Player2"){
+                $(".attack-power-player2").text(player.attack);
+                $(".attack-weapon-player2").css('background-image', 'url(' + weaponImg + ')');
+              }
 
 
                 $("#grid_"+row+"_"+col+"").css("background-color",""); // Initialize the background to null
@@ -169,12 +176,12 @@ class Board {
 		this.playerStore = [{
 		   name: 'Player1', 
            image: 'assets/img/players/player1.png',
-           attack: 5,
+           attack: 10,
 		   position: {row: null, col: null},
 		},
 		{
            name: 'Player2',
-           attack: 5, 
+           attack: 10, 
 		   image: 'assets/img/players/player2.png',
 		   position: {row: null, col: null},
 		},
@@ -455,6 +462,102 @@ removePossibleMoveRight = () => {
       
  }
 
+ //Monitor fighting horizontally or vertically
+//Check for fight up
+fightMonitorUp = (clickedRow, clickedColumn) =>{
+    let row = clickedRow;
+    let col = clickedColumn;
+
+      for(let i = 1; i <= 1; i++){
+        row = row - 1;
+        if(row < 0){
+            break; //Break loop if we move out of the map
+        }
+        // If there's a player we call for the fight function
+        if(this.map[row][col].player){
+            console.log("there's a player above here");
+            window.location.href = "#fight-modal";
+               break;
+            }
+              
+    }
+
+}
+
+//Check for fight down
+fightMonitorDown = (clickedRow, clickedColumn) =>{
+    let row = clickedRow;
+    let col = clickedColumn;
+
+      for(let i = 1; i <= 1; i++){
+        row = row + 1;
+        if(row >= 10){
+            break; //Break loop if we move out of the map
+        }
+        // If there's a player we call for the fight function
+        if(this.map[row][col].player){
+            console.log("there's a player Under");
+            window.location.href = "#fight-modal";
+                break;
+            }
+    }
+
+
+}
+
+//Check for left
+fightMonitorLeft = (clickedRow, clickedColumn) =>{
+    let row = clickedRow;
+    let col = clickedColumn;
+
+      for(let i = 1; i <= 1; i++){
+        col = col - 1;
+        if(col < 0){
+            break; //Break loop if we move out of the map
+        }
+        // If there's a player we call for the fight function
+        if(this.map[row][col].player){
+            console.log("there's a player on left");
+            window.location.href = "#fight-modal";
+                break;
+            }
+              
+    }
+
+}
+
+//Check for fight right
+fightMonitorRight = (clickedRow, clickedColumn) =>{
+    let row = clickedRow;
+    let col = clickedColumn;
+
+      for(let i = 1; i <= 1; i++){
+        col = col + 1;
+        if(col >= 10){
+            break; //Break loop if we move out of the map
+        }
+        // If there's a player we call for the fight function
+        if(this.map[row][col].player){
+            console.log("there's a player on right");
+            window.location.href = "#fight-modal";
+                break;
+            }
+    }
+
+
+}
+
+ //Check to start fight
+ checkToStartFight = (clickedRow, clickedColumn) =>{
+
+    this.fightMonitorUp(clickedRow, clickedColumn);
+    this.fightMonitorDown(clickedRow, clickedColumn);
+    this.fightMonitorRight(clickedRow, clickedColumn);
+    this.fightMonitorLeft(clickedRow, clickedColumn);
+    
+
+ }
+
 //Calculate movable cells of current player
  calculateMovableCells = () => {
     this.PossibleMoveUp();
@@ -563,13 +666,17 @@ $(document).ready(function() {
 
         //----------------------DROP PREVIOUS WEAPON LOGIC ENDS---------------------
         //allow player to move
+         //update player position
         theBoard.placePlayerElement(parseInt(clickedRow), parseInt(clickedColumn), currentPlayer.image, currentPlayer.name);
-            
 
-        //update player position.
+        //Check if player is beside to start fight
+        theBoard.checkToStartFight(parseInt(clickedRow), parseInt(clickedColumn));
+       
         console.log(`Row is ${clickedRow}, Column is ${clickedColumn}`);
         theBoard.currentTurn = theBoard.currentTurn == 'Player1' ? 'Player2' : 'Player1';
         theBoard.calculateMovableCells();
+        
+
     }   
 })
 

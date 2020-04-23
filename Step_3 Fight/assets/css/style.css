@@ -61,6 +61,16 @@ body{
 }
 
 
+/* Player battle CSS */
+
+.player-battle{
+  display: inline-block;
+  margin-left: 10%;
+  text-align: center;
+}
+#player2-position{
+  margin-left: 27%;
+}
 
 /*Button*/
 
@@ -328,3 +338,34 @@ body{
   .header{
     margin-left: 30px;
   }
+
+  /* CSS for the Modal Battle */
+  
+.modalDialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99999;
+  opacity:0;
+  -webkit-transition: opacity 100ms ease-in;
+  -moz-transition: opacity 100ms ease-in;
+  transition: opacity 100ms ease-in;
+  pointer-events: none;
+}
+.modalDialog:target {
+  opacity:1;
+  pointer-events: auto;
+}
+.modalDialog > div {
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 3px;
+  background: #fff;
+}
+
