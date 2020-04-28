@@ -75,6 +75,8 @@ class Board {
 	
 	placePlayerElement(row, col, element, key){
         //also need to check if weapons/players are not placed
+        //check each position and check if there's a player beside
+  
         if (this.map[row][col].element != true){
             this.map[row][col].player = true;
             this.map[row][col].playerName = key;//something
@@ -343,7 +345,7 @@ class Board {
     let col = currentPlayer.position.col;
   
 
-     //Looping to display movable spots
+     //Looping to remove display movable spots
      for(let i = 1; i <= 3; i++){
          row = row-1; // Reducing the value of row because up means minus but on the same col
          if(row < 0){
@@ -375,7 +377,7 @@ class Board {
     let col = currentPlayer.position.col;
 
 
-     //Looping to display movable spots
+     //Looping to remove display movable spots
      for(let i = 1; i <= 3; i++){
          row = row+1; //Increasing the value of rows because down mean plus but on the same col
          if(row >= 10){
@@ -407,7 +409,7 @@ class Board {
     let row = currentPlayer.position.row;
     let col = currentPlayer.position.col;
 
-     //Looping to display movable spots
+     //Looping to remove display movable spots
      for(let i = 1; i <= 3; i++){
          col = col-1; //Reducing instead the value of col here because, Left means minus col but on the same row
          if(col < 0){
@@ -438,7 +440,7 @@ removePossibleMoveRight = () => {
     let row = currentPlayer.position.row;
     let col = currentPlayer.position.col;
 
-     //Looping to display movable spots
+     //Looping to remove display movable spots
      for(let i = 1; i <= 3; i++){
          col = col+1; //Increasing the value of col because right means plus but on the same row
          if(col >= 10){
@@ -477,6 +479,8 @@ fightMonitorUp = (clickedRow, clickedColumn) =>{
         if(this.map[row][col].player){
             console.log("there's a player above here");
             window.location.href = "#fight-modal";
+            //calling for the fight
+            theBoard.fight();
                break;
             }
               
@@ -498,6 +502,8 @@ fightMonitorDown = (clickedRow, clickedColumn) =>{
         if(this.map[row][col].player){
             console.log("there's a player Under");
             window.location.href = "#fight-modal";
+            //calling for the fight
+            theBoard.fight();
                 break;
             }
     }
@@ -519,6 +525,8 @@ fightMonitorLeft = (clickedRow, clickedColumn) =>{
         if(this.map[row][col].player){
             console.log("there's a player on left");
             window.location.href = "#fight-modal";
+            //calling for the fight
+            theBoard.fight();
                 break;
             }
               
@@ -540,6 +548,8 @@ fightMonitorRight = (clickedRow, clickedColumn) =>{
         if(this.map[row][col].player){
             console.log("there's a player on right");
             window.location.href = "#fight-modal";
+             //calling for the fight
+                theBoard.fight();
                 break;
             }
     }
@@ -595,6 +605,68 @@ clearCell = () => {
 
 }
 
+fight = () =>{
+    //EventListerners for thee fight
+    let currentPlayer = this.playerStore.find((playerObj) => {return playerObj.name == this.currentTurn });
+
+        if(currentPlayer.name == 'Player1'){
+            $('#Player1-attack').css("opacity","1");
+            $('#Player1-defend').css("opacity","1");
+
+            $('#Player2-attack').css("opacity",".5");
+            $('#Player2-defend').css("opacity",".5");
+
+            $('#Player1-attack').css("cursor","auto");
+            $('#Player1-defend').css("cursor","auto");
+
+            $('#Player2-attack').css("cursor","not-allowed");
+            $('#Player2-defend').css("cursor","not-allowed");
+
+            $('#Player1-attack').prop('disabled', false);
+            $('#Player1-defend').prop('disabled', false);
+
+            $('#Player2-attack').prop('disabled', true);
+            $('#Player2-defend').prop('disabled', true);
+
+            $('#'+currentPlayer.name+'-attack').click(function() {
+                console.log(currentPlayer.name);
+            });
+
+            $('#'+currentPlayer.name+'-defend').click(function() {
+                console.log(currentPlayer.name);
+
+            });
+            
+    }else{
+        $('#Player2-attack').css("opacity","1");
+        $('#Player2-defend').css("opacity","1");
+
+        $('#Player1-attack').css("opacity",".5");
+        $('#Player1-defend').css("opacity",".5");
+
+        $('#Player2-attack').css("cursor","auto");
+        $('#Player2-defend').css("cursor","auto");
+
+        $('#Player1-attack').css("cursor","not-allowed");
+        $('#Player1-defend').css("cursor","not-allowed");
+
+        $('#Player2-attack').prop('disabled', false);
+        $('#Player2-defend').prop('disabled', false);
+
+        $('#Player1-attack').prop('disabled', true);
+        $('#Player1-defend').prop('disabled', true);
+
+        $('#Player2-attack').click(function() {
+            console.log("Player2");
+        });
+
+        $('#Player2-defend').click(function() {
+            console.log("Player2");
+
+        });
+    }
+        
+}
 
 }//end of class
 
@@ -675,8 +747,11 @@ $(document).ready(function() {
         console.log(`Row is ${clickedRow}, Column is ${clickedColumn}`);
         theBoard.currentTurn = theBoard.currentTurn == 'Player1' ? 'Player2' : 'Player1';
         theBoard.calculateMovableCells();
-        
 
+       
+       
+ 
+  
     }   
 })
 
