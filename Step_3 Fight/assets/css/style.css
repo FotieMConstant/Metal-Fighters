@@ -1,7 +1,17 @@
-
+html
+{
+    overflow-y: hidden; /* Hide horizontal scrollbar */
+    overflow-x: auto; /* Add vertical scrollbar */
+    background-image: url('../img/bg/bg.jpg');
+    background-repeat: no-repeat;
+}
 body{
   min-width: 1220px;
-
+  transform: scale(.7);
+  transform-origin: top;
+  margin-bottom: -100% !important;
+  padding-bottom: 10% !important;
+  
 }
 /* Grid styling */
 #container {

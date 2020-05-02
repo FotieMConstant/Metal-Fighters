@@ -74,9 +74,24 @@ class Board {
     }
 	
 	placePlayerElement(row, col, element, key){
-        //also need to check if weapons/players are not placed
+         //also need to check if weapons/players are not placed
         //check each position and check if there's a player beside
-  
+
+        // if (this.map[row+1][col].player == true){
+        //     this.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key);
+        // }
+        // else if (this.map[row-1][col].player == true) {
+        //     this.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key);
+        // }
+        // else if (this.map[row][col+1].player == true) {
+        //     this.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key);
+        // }
+        // else if (this.map[row][col-1].player == true) {
+        //     this.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key);
+        // }
+        // else if (this.map[row][col+1].player == true) {
+        //     this.placePlayerElement(theBoard.randomRAC(), theBoard.randomRAC(), element, key);
+        // }
         if (this.map[row][col].element != true){
             this.map[row][col].player = true;
             this.map[row][col].playerName = key;//something
@@ -606,70 +621,76 @@ clearCell = () => {
 }
 
 fight = () =>{
-    //EventListerners for thee fight
-    let currentPlayer = this.playerStore.find((playerObj) => {return playerObj.name == this.currentTurn });
+    //Event Listerners for the fight
+    let playerName = this.currentTurn;
 
-        if(currentPlayer.name == 'Player1'){
-            $('#Player1-attack').css("opacity","1");
-            $('#Player1-defend').css("opacity","1");
+    $('#Player1-attack').click(function() {
+        playerName = 'Player2'
+        handleButtons(playerName);
+    });
 
-            $('#Player2-attack').css("opacity",".5");
-            $('#Player2-defend').css("opacity",".5");
+    $('#Player1-defend').click(function() {
+        playerName = 'Player2'
+        handleButtons(playerName);
+    });
 
-            $('#Player1-attack').css("cursor","auto");
-            $('#Player1-defend').css("cursor","auto");
+    $('#Player2-attack').click(function() {
+        playerName = 'Player1'
+        handleButtons(playerName);
+    });
 
-            $('#Player2-attack').css("cursor","not-allowed");
-            $('#Player2-defend').css("cursor","not-allowed");
-
-            $('#Player1-attack').prop('disabled', false);
-            $('#Player1-defend').prop('disabled', false);
-
-            $('#Player2-attack').prop('disabled', true);
-            $('#Player2-defend').prop('disabled', true);
-
-            $('#'+currentPlayer.name+'-attack').click(function() {
-                console.log(currentPlayer.name);
-            });
-
-            $('#'+currentPlayer.name+'-defend').click(function() {
-                console.log(currentPlayer.name);
-
-            });
-            
-    }else{
-        $('#Player2-attack').css("opacity","1");
-        $('#Player2-defend').css("opacity","1");
-
-        $('#Player1-attack').css("opacity",".5");
-        $('#Player1-defend').css("opacity",".5");
-
-        $('#Player2-attack').css("cursor","auto");
-        $('#Player2-defend').css("cursor","auto");
-
-        $('#Player1-attack').css("cursor","not-allowed");
-        $('#Player1-defend').css("cursor","not-allowed");
-
-        $('#Player2-attack').prop('disabled', false);
-        $('#Player2-defend').prop('disabled', false);
-
-        $('#Player1-attack').prop('disabled', true);
-        $('#Player1-defend').prop('disabled', true);
-
-        $('#Player2-attack').click(function() {
-            console.log("Player2");
-        });
-
-        $('#Player2-defend').click(function() {
-            console.log("Player2");
-
-        });
-    }
+    $('#Player2-defend').click(function() {
+        playerName = 'Player1'
+        handleButtons(playerName);
+    });
+    handleButtons(playerName);
         
 }
 
 }//end of class
 
+
+//To handle the styling of the buttons
+handleButtons = (player) => {
+    if(player == 'Player1'){
+        $('#Player1-attack').css("opacity","1");
+        $('#Player1-defend').css("opacity","1");
+
+        $('#Player2-attack').css("opacity",".5");
+        $('#Player2-defend').css("opacity",".5");
+
+        $('#Player1-attack').css("cursor","auto");
+        $('#Player1-defend').css("cursor","auto");
+
+        $('#Player2-attack').css("cursor","not-allowed");
+        $('#Player2-defend').css("cursor","not-allowed");
+
+        $('#Player1-attack').prop('disabled', false);
+        $('#Player1-defend').prop('disabled', false);
+
+        $('#Player2-attack').prop('disabled', true);
+        $('#Player2-defend').prop('disabled', true); 
+        
+}else{
+    $('#Player2-attack').css("opacity","1");
+    $('#Player2-defend').css("opacity","1");
+
+    $('#Player1-attack').css("opacity",".5");
+    $('#Player1-defend').css("opacity",".5");
+
+    $('#Player2-attack').css("cursor","auto");
+    $('#Player2-defend').css("cursor","auto");
+
+    $('#Player1-attack').css("cursor","not-allowed");
+    $('#Player1-defend').css("cursor","not-allowed");
+
+    $('#Player2-attack').prop('disabled', false);
+    $('#Player2-defend').prop('disabled', false);
+
+    $('#Player1-attack').prop('disabled', true);
+    $('#Player1-defend').prop('disabled', true);
+}
+}
 
 
 
