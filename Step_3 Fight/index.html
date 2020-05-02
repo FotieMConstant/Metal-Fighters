@@ -56,7 +56,7 @@
         <h2>Player 1</h2>
       </div>
       <img class="player-player1" src="assets/img/player1-poster.png" alt="Player-1">
-      <div class="life-points"><strong>Life points: </strong>100</div>
+      <div class="life-points"><strong>Life points: </strong><span class="Player1-life">100</span></div>
       <div style="margin-left:30%; width: 76px; height: 76px; background: url('assets/img/weapons/fork.png')" class="attack-weapon-player1"> </div>
       <div><strong>Attack power: </strong> <span class="attack-power-player1">10</span></div>
 
@@ -71,7 +71,7 @@
       <h2>Player 2</h2>
     </div>
     <img class="player-poster2" src="assets/img/player2-poster.png" alt="Player-2">
-    <div class="life-points"><strong>Life points:</strong> 100</div>
+    <div class="life-points"><strong>Life points:</strong> <span class="Player2-life">100</span></div>
     <div style="margin-left:35%; width: 76px; height: 76px; background: url('assets/img/weapons/fork.png')" class="attack-weapon-player2"> </div>
     <div><strong>Attack power: </strong><span class="attack-power-player2">10</span></div>
 
@@ -101,6 +101,21 @@
     </div>
   </div>
 
+  <!--modals for gameover-->
+  <div align="center" id="gameover-modal" class="modalDialog">
+    <div>
+      <a href="#close" title="Close" class="close">X</a>
+      <h2>Game Over!</h2>
+      <hr>
+      <p>
+        <h4>Fight Ends</h4>
+        <div id="winner-avatar"></div>
+       <h2><div id="winner"></div></h2> 
+       <a href="index.html"><button class="button green" title="Start new game">New game</button></a>
+      </p>
+    </div>
+  </div>
+
 
 <!--modals for fight-->
   <div id="fight-modal" class="modalDialog">
@@ -113,7 +128,7 @@
             <h2>Player 1</h2>
           </div>
           <img class="player-player1" src="assets/img/player1-poster.png" alt="Player-1">
-          <div class="life-points"><strong>Life points: </strong><span id="Player1-life">100</span></div>
+          <div class="life-points"><strong>Life points: </strong><span class="Player1-life">100</span></div>
           <div style="margin-left:35%; width: 76px; height: 76px; background: url('assets/img/weapons/fork.png')" class="attack-weapon-player1"> </div>
           <div><strong>Attack power: </strong> <span class="attack-power-player1">10</span></div>
           <div class="defence"><strong>Defence:</strong> False</div><br>
@@ -126,7 +141,7 @@
             <h2>Player 2</h2>
           </div>
           <img class="player-poster2" src="assets/img/player2-poster.png" alt="Player-2">
-          <div class="life-points"><strong>Life points:</strong> <span id="Player2-life">100</span> </div>
+          <div class="life-points"><strong>Life points:</strong> <span class="Player2-life">100</span> </div>
           <div style="margin-left:35%; width: 76px; height: 76px; background: url('assets/img/weapons/fork.png')" class="attack-weapon-player2"> </div>
           <div><strong>Attack power: </strong> <span class="attack-power-player2">10</span></div>
           <div class="defence"><strong>Defence:</strong> False</div> <br>
