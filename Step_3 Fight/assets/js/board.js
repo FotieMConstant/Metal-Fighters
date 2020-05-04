@@ -634,14 +634,15 @@ fight = () =>{
     $('#Player1-attack').click(function() {
         let currentPlayer = theBoard.playerStore.find((playerObj) => {return playerObj.name == playerName });
        //In case the player has defended
-        if(Player2Defend){
-            Player2Life = Player2Life - (currentPlayer.attack / 2);
+        if(Player2Defend === true){
+            Player2Life -= currentPlayer.attack/2;
             $('.Player2-life').text(Player2Life);
-        }
+            Player2Defend = false;
+        }else{
         //In case the player hasn't defended
-        Player2Life = Player2Life - currentPlayer.attack;
+        Player2Life -= currentPlayer.attack;
          $('.Player2-life').text(Player2Life);
-       
+        }
          //When the opponent's player's life is less than or equal to 0 declare winner
          if(Player2Life <= 0){
              console.log("Player 1 wins");
@@ -662,14 +663,15 @@ fight = () =>{
     $('#Player2-attack').click(function() {
         let currentPlayer = theBoard.playerStore.find((playerObj) => {return playerObj.name == playerName });
         //In case the player has defended
-        if(Player1Defend){
-            Player1Life = Player1Life - (currentPlayer.attack / 2);
+        if(Player1Defend === true){
+            Player1Life -= currentPlayer.attack/2;
             $('.Player1-life').text(Player1Life);
-        }
+            Player1Defend = false;
+        }else{
         //In case the player hasn't defended
-        Player1Life = Player1Life - currentPlayer.attack;
+        Player1Life -= currentPlayer.attack;
          $('.Player1-life').text(Player1Life);
-
+        }
          //When the opponent's player's life is less than or equal to 0 declare winner
          if(Player1Life <= 0){
             console.log("Player 2 wins");
