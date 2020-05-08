@@ -17,7 +17,7 @@ class Board {
         this.currentTurn = null;
     }
     // Function to create the grid
-    createGrid() {
+    createGrid = () => {
         for (var rows = 0; rows < this.nb_grids; rows++) {
             this.map[rows] = [];
             for (var columns = 0; columns < this.nb_grids; columns++) {
@@ -45,7 +45,7 @@ class Board {
     }
 
     //to place a block element on a spacified coordinate
-    placeBlockElement(row, col, element) {
+    placeBlockElement = (row, col, element) => {
         //also need to check if weapons/players are not placed
         if (this.map[row][col].element != true) {
             this.map[row][col].block = true;
@@ -57,7 +57,7 @@ class Board {
     }
 
     //to place a weapon element on a spacified coordinate
-    placeWeaponElement(row, col, element, key) {
+    placeWeaponElement = (row, col, element, key) => {
         //also need to check if weapons/players are not placed
         if (this.map[row][col].element != true) {
             this.map[row][col].weapon = true;
@@ -74,7 +74,7 @@ class Board {
         }
     }
 
-    placePlayerElement(row, col, element, key) {
+    placePlayerElement = (row, col, element, key) => {
         //also need to check if weapons/players are not placed
         //check each position and check if there's a player beside
 
@@ -231,7 +231,7 @@ class Board {
     }
 
     //Display up moves
-    PossibleMoveUp() {
+    PossibleMoveUp = () => {
 
 
         let currentPlayer = this.playerStore.find((playerObj) => {
@@ -271,7 +271,7 @@ class Board {
     }
 
     //Display up moves
-    PossibleMoveDown() {
+    PossibleMoveDown = () => {
 
         let currentPlayer = this.playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
@@ -309,7 +309,7 @@ class Board {
 
 
     //Display up moves
-    PossibleMoveLeft() {
+    PossibleMoveLeft = () => {
 
         let currentPlayer = this.playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
@@ -346,7 +346,7 @@ class Board {
 
 
     //Display up moves
-    PossibleMoveRight() {
+    PossibleMoveRight = () => {
 
 
         let currentPlayer = this.playerStore.find((playerObj) => {
