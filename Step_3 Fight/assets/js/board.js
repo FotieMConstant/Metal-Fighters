@@ -78,81 +78,78 @@ class Board {
         //also need to check if weapons/players are not placed
         //check each position and check if there's a player beside
 
-        // if (this.map[row+1][col].player == true){
-        //     this.placePlayerElement(randomRAC(), randomRAC(), element, key);
-        // }
-        // else if (this.map[row-1][col].player == true) {
-        //     this.placePlayerElement(randomRAC(), randomRAC(), element, key);
-        // }
-        // else if (this.map[row][col+1].player == true) {
-        //     this.placePlayerElement(randomRAC(), randomRAC(), element, key);
-        // }
-        // else if (this.map[row][col-1].player == true) {
-        //     this.placePlayerElement(randomRAC(), randomRAC(), element, key);
-        // }
-
-        if (this.map[row][col].element != true) {
-            this.map[row][col].player = true;
-            this.map[row][col].playerName = key; //something
-            this.map[row][col].element = true;
-            console.log(this.map); // Printing the map in a 2D array
-            //please update player store
-            let player = this.playerStore.find((player) => player.name == key);
-            player.position = {
-                row: row,
-                col: col
-            };
-            console.log(player.name + " has attack " + player.attack);
-            $("#grid_" + row + "_" + col + "").css("background-color", ""); // Initialize the background to null
-            $("#grid_" + row + "_" + col).css("box-shadow", ""); // In case there's a weapon also set the box-shadow to null (When player crosses weapon)
-            $("#grid_" + row + "_" + col + "").css('background-image', 'url(' + element + ')');
+        if (row < 9 && this.map[row + 1][col].player == true) {
+            this.placePlayerElement(randomRAC(), randomRAC(), element, key);
+        } else if (row > 0 && this.map[row - 1][col].player == true) {
+            this.placePlayerElement(randomRAC(), randomRAC(), element, key);
+        } else if (col < 9 && this.map[row][col + 1].player == true) {
+            this.placePlayerElement(randomRAC(), randomRAC(), element, key);
+        } else if (col > 0 && this.map[row][col - 1].player == true) {
+            this.placePlayerElement(randomRAC(), randomRAC(), element, key);
         } else {
-            //This if is for when the player is in movement and falls on a weapon
-            if (this.map[row][col].weapon) {
+            if (this.map[row][col].element != true) {
                 this.map[row][col].player = true;
                 this.map[row][col].playerName = key; //something
-                // this.map[row][col].element = true;
-                // this.map[row][col].weapon = true;
+                this.map[row][col].element = true;
                 console.log(this.map); // Printing the map in a 2D array
-
                 //please update player store
                 let player = this.playerStore.find((player) => player.name == key);
                 player.position = {
                     row: row,
                     col: col
                 };
-
-
-                console.log("---> You just walked on a weapon!");
-
-                let weaponImg; // To store the damage's image
-                //Looping to get the weapon damages from the weapon store
-                //To update the player's attack
-                for (let weapon in this.weaponsStore) {
-                    if (weapon == this.map[row][col].weaponName) {
-                        player.attack = this.weaponsStore[weapon].damage;
-                        weaponImg = this.weaponsStore[weapon].image;
-                        break;
-                    }
-                }
-
-                console.log(player.name + " has picked new attack " + player.attack);
-
-                //Updating the ui with the new weapon picked
-                if (player.name == "Player1") {
-                    $(".attack-power-player1").text(player.attack);
-                    $(".attack-weapon-player1").css('background-image', 'url(' + weaponImg + ')');
-                } else if (player.name == "Player2") {
-                    $(".attack-power-player2").text(player.attack);
-                    $(".attack-weapon-player2").css('background-image', 'url(' + weaponImg + ')');
-                }
-
-
+                console.log(player.name + " has attack " + player.attack);
                 $("#grid_" + row + "_" + col + "").css("background-color", ""); // Initialize the background to null
                 $("#grid_" + row + "_" + col).css("box-shadow", ""); // In case there's a weapon also set the box-shadow to null (When player crosses weapon)
                 $("#grid_" + row + "_" + col + "").css('background-image', 'url(' + element + ')');
             } else {
-                this.placePlayerElement(randomRAC(), randomRAC(), element, key);
+                //This if is for when the player is in movement and falls on a weapon
+                if (this.map[row][col].weapon) {
+                    this.map[row][col].player = true;
+                    this.map[row][col].playerName = key; //something
+                    // this.map[row][col].element = true;
+                    // this.map[row][col].weapon = true;
+                    console.log(this.map); // Printing the map in a 2D array
+
+                    //please update player store
+                    let player = this.playerStore.find((player) => player.name == key);
+                    player.position = {
+                        row: row,
+                        col: col
+                    };
+
+
+                    console.log("---> You just walked on a weapon!");
+
+                    let weaponImg; // To store the damage's image
+                    //Looping to get the weapon damages from the weapon store
+                    //To update the player's attack
+                    for (let weapon in this.weaponsStore) {
+                        if (weapon == this.map[row][col].weaponName) {
+                            player.attack = this.weaponsStore[weapon].damage;
+                            weaponImg = this.weaponsStore[weapon].image;
+                            break;
+                        }
+                    }
+
+                    console.log(player.name + " has picked new attack " + player.attack);
+
+                    //Updating the ui with the new weapon picked
+                    if (player.name == "Player1") {
+                        $(".attack-power-player1").text(player.attack);
+                        $(".attack-weapon-player1").css('background-image', 'url(' + weaponImg + ')');
+                    } else if (player.name == "Player2") {
+                        $(".attack-power-player2").text(player.attack);
+                        $(".attack-weapon-player2").css('background-image', 'url(' + weaponImg + ')');
+                    }
+
+
+                    $("#grid_" + row + "_" + col + "").css("background-color", ""); // Initialize the background to null
+                    $("#grid_" + row + "_" + col).css("box-shadow", ""); // In case there's a weapon also set the box-shadow to null (When player crosses weapon)
+                    $("#grid_" + row + "_" + col + "").css('background-image', 'url(' + element + ')');
+                } else {
+                    this.placePlayerElement(randomRAC(), randomRAC(), element, key);
+                }
             }
         }
     }
