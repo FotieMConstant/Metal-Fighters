@@ -4,6 +4,7 @@ randomRAC = () => {
     return genNumber;
 }
 
+
 //Grid layout / Creating the board
 
 // Board class
@@ -12,8 +13,6 @@ class Board {
     constructor(grid_nb) {
         this.nb_grids = grid_nb;
         this.map = [];
-        this.weaponsStore = {};
-        this.playerStore = {};
         this.currentTurn = null;
     }
     // Function to create the grid
@@ -64,7 +63,7 @@ class Board {
             this.map[row][col].weaponName = key; //something
             this.map[row][col].element = true;
             //please update weapon store
-            this.weaponsStore[key].position = {
+            weaponsStore[key].position = {
                 row: row,
                 col: col
             };
@@ -93,7 +92,7 @@ class Board {
                 this.map[row][col].element = true;
                 console.log(this.map); // Printing the map in a 2D array
                 //please update player store
-                let player = this.playerStore.find((player) => player.name == key);
+                let player = playerStore.find((player) => player.name == key);
                 player.position = {
                     row: row,
                     col: col
@@ -112,7 +111,7 @@ class Board {
                     console.log(this.map); // Printing the map in a 2D array
 
                     //please update player store
-                    let player = this.playerStore.find((player) => player.name == key);
+                    let player = playerStore.find((player) => player.name == key);
                     player.position = {
                         row: row,
                         col: col
@@ -124,10 +123,10 @@ class Board {
                     let weaponImg; // To store the damage's image
                     //Looping to get the weapon damages from the weapon store
                     //To update the player's attack
-                    for (let weapon in this.weaponsStore) {
+                    for (let weapon in weaponsStore) {
                         if (weapon == this.map[row][col].weaponName) {
-                            player.attack = this.weaponsStore[weapon].damage;
-                            weaponImg = this.weaponsStore[weapon].image;
+                            player.attack = weaponsStore[weapon].damage;
+                            weaponImg = weaponsStore[weapon].image;
                             break;
                         }
                     }
@@ -154,84 +153,11 @@ class Board {
         }
     }
 
-
-
-    createWeaponsStore = () => {
-        //update waeponsStore to have  multiple  key with values as objects. the name of the keys will be weapon names. the values   will hold details of the weapon
-        // like attack, defend Initially set them to null
-        this.weaponsStore = {
-            knife: {
-                position: {
-                    row: null,
-                    col: null
-                },
-                damage: 30,
-                image: 'assets/img/weapons/knife.PNG'
-            },
-            gun: {
-                position: {
-                    row: null,
-                    col: null
-                },
-                damage: 50,
-                image: 'assets/img/weapons/gun.PNG'
-            },
-            axe: {
-                position: {
-                    row: null,
-                    col: null
-                },
-                damage: 40,
-                image: 'assets/img/weapons/axe.PNG'
-            },
-            swords: {
-                position: {
-                    row: null,
-                    col: null
-                },
-                damage: 20,
-                image: 'assets/img/weapons/sword.PNG'
-            },
-            fork: {
-                position: {
-                    row: null,
-                    col: null
-                },
-                damage: 10,
-                image: 'assets/img/weapons/fork.PNG'
-            },
-        }
-    }
-    createPlayerStore = () => {
-        //update playerStore to have two key with values as objects. those will hold details of the player
-        // like player attack, defend, position etc. Initially set them to null
-
-        this.playerStore = [{
-                name: 'Player1',
-                image: 'assets/img/players/player1.png',
-                attack: 10,
-                position: {
-                    row: null,
-                    col: null
-                },
-            },
-            {
-                name: 'Player2',
-                attack: 10,
-                image: 'assets/img/players/player2.png',
-                position: {
-                    row: null,
-                    col: null
-                },
-            },
-        ]
-    }
-
     //Display up moves
     PossibleMoveUp = () => {
 
 
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         })
 
@@ -270,7 +196,7 @@ class Board {
     //Display up moves
     PossibleMoveDown = () => {
 
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         })
 
@@ -308,7 +234,7 @@ class Board {
     //Display up moves
     PossibleMoveLeft = () => {
 
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         })
 
@@ -346,7 +272,7 @@ class Board {
     PossibleMoveRight = () => {
 
 
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         })
 
@@ -384,7 +310,7 @@ class Board {
     //Remove Display up moves
     removePossibleMoveUp = () => {
 
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         })
 
@@ -418,7 +344,7 @@ class Board {
     //Remove Display Down moves
     removePossibleMoveDown = () => {
 
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         })
 
@@ -453,7 +379,7 @@ class Board {
     //Remove Display up moves
     removePossibleMoveLeft = () => {
 
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         })
 
@@ -486,7 +412,7 @@ class Board {
     //Display up moves
     removePossibleMoveRight = () => {
 
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         })
 
@@ -639,7 +565,7 @@ class Board {
 
     //Clearing the previous player's position on the map
     clearCell = () => {
-        let currentPlayer = this.playerStore.find((playerObj) => {
+        let currentPlayer = playerStore.find((playerObj) => {
             return playerObj.name == this.currentTurn
         });
         let row = currentPlayer.position.row;
@@ -672,7 +598,7 @@ class Board {
 
 
         $('#Player1-attack').click(function () {
-            let currentPlayer = theBoard.playerStore.find((playerObj) => {
+            let currentPlayer = playerStore.find((playerObj) => {
                 return playerObj.name == playerName
             });
             //In case the player has defended
@@ -703,7 +629,7 @@ class Board {
         });
 
         $('#Player2-attack').click(function () {
-            let currentPlayer = theBoard.playerStore.find((playerObj) => {
+            let currentPlayer = playerStore.find((playerObj) => {
                 return playerObj.name == playerName
             });
             //In case the player has defended
@@ -795,15 +721,15 @@ $(document).ready(function () {
     theBoard = new Board(10);
     theBoard.createGrid();
 
-    theBoard.createWeaponsStore(); //Calling the Weapon store function in my class
-    console.log(theBoard.weaponsStore);
+    createWeaponsStore(); //Calling the Weapon store function in my class
+    console.log(weaponsStore);
     //Looping to display weapons on map 
-    for (var weapon in theBoard.weaponsStore) {
-        theBoard.placeWeaponElement(randomRAC(), randomRAC(), theBoard.weaponsStore[weapon].image, weapon);
+    for (var weapon in weaponsStore) {
+        theBoard.placeWeaponElement(randomRAC(), randomRAC(), weaponsStore[weapon].image, weapon);
     }
 
-    theBoard.createPlayerStore(); //Calling the Player store in my class
-    theBoard.playerStore.forEach(player => {
+    createPlayerStore(); //Calling the Player store in my class
+    playerStore.forEach(player => {
         theBoard.placePlayerElement(randomRAC(), randomRAC(), player.image, player.name);
     })
 
@@ -830,7 +756,7 @@ $(document).ready(function () {
             //if weapon, please update player attack in store based on that weapon damage
 
             theBoard.clearCell(); // Clearing the previous player's position on the map
-            let currentPlayer = theBoard.playerStore.find((playerObj) => {
+            let currentPlayer = playerStore.find((playerObj) => {
                 return playerObj.name == theBoard.currentTurn
             });
 
@@ -838,7 +764,7 @@ $(document).ready(function () {
 
             if (theBoard.map[clickedRow][clickedColumn].weapon && !currentPlayer.weaponName) {
                 currentPlayer.weaponName = theBoard.map[clickedRow][clickedColumn].weaponName
-                //currentPlayer.damage +=  theBoard.weaponsStore[theBoard.map[clickedRow][clickedColumn].weaponName].damage 
+                //currentPlayer.damage +=  weaponsStore[theBoard.map[clickedRow][clickedColumn].weaponName].damage 
                 currentPlayer.weaponPosition = {
                     row: clickedRow,
                     col: clickedColumn
@@ -847,7 +773,7 @@ $(document).ready(function () {
                 let oldWeaponName = currentPlayer.weaponName
                 let oldWeaponPosition = currentPlayer.weaponPosition
                 currentPlayer.weaponName = theBoard.map[clickedRow][clickedColumn].weaponName;
-                theBoard.placeWeaponElement(oldWeaponPosition.row, oldWeaponPosition.col, theBoard.weaponsStore[oldWeaponName].image, oldWeaponName);
+                theBoard.placeWeaponElement(oldWeaponPosition.row, oldWeaponPosition.col, weaponsStore[oldWeaponName].image, oldWeaponName);
             }
 
 
