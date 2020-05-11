@@ -9,7 +9,7 @@ function createWeaponsStore() {
                 col: null
             },
             damage: 30,
-            image: 'assets/img/weapons/knife.PNG'
+            image: 'assets/img/weapons/knife.png'
         },
         gun: {
             position: {
@@ -17,7 +17,7 @@ function createWeaponsStore() {
                 col: null
             },
             damage: 50,
-            image: 'assets/img/weapons/gun.PNG'
+            image: 'assets/img/weapons/gun.png'
         },
         axe: {
             position: {
@@ -25,7 +25,7 @@ function createWeaponsStore() {
                 col: null
             },
             damage: 40,
-            image: 'assets/img/weapons/axe.PNG'
+            image: 'assets/img/weapons/axe.png'
         },
         swords: {
             position: {
@@ -33,7 +33,7 @@ function createWeaponsStore() {
                 col: null
             },
             damage: 20,
-            image: 'assets/img/weapons/sword.PNG'
+            image: 'assets/img/weapons/sword.png'
         },
         fork: {
             position: {
@@ -41,7 +41,7 @@ function createWeaponsStore() {
                 col: null
             },
             damage: 10,
-            image: 'assets/img/weapons/fork.PNG'
+            image: 'assets/img/weapons/fork.png'
         },
     }
 }
