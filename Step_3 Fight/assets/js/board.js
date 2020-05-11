@@ -443,109 +443,31 @@ class Board {
 
     }
 
-    //Monitor fighting horizontally or vertically
-    //Check for fight up
-    fightMonitorUp = (clickedRow, clickedColumn) => {
-        let row = clickedRow;
-        let col = clickedColumn;
+    // //Check to start fight
+    // checkToStartFight = (row, col) => {
 
-        for (let i = 1; i <= 1; i++) {
-            row = row - 1;
-            if (row < 0) {
-                break; //Break loop if we move out of the map
-            }
-            // If there's a player we call for the fight function
-            if (this.map[row][col].player) {
-                console.log("there's a player above here");
-                window.location.href = "#fight-modal";
-                //calling for the fight
-                theBoard.fight();
-                break;
-            }
-
-        }
-
-    }
-
-    //Check for fight down
-    fightMonitorDown = (clickedRow, clickedColumn) => {
-        let row = clickedRow;
-        let col = clickedColumn;
-
-        for (let i = 1; i <= 1; i++) {
-            row = row + 1;
-            if (row >= 10) {
-                break; //Break loop if we move out of the map
-            }
-            // If there's a player we call for the fight function
-            if (this.map[row][col].player) {
-                console.log("there's a player Under");
-                window.location.href = "#fight-modal";
-                //calling for the fight
-                theBoard.fight();
-                break;
-            }
-        }
-
-
-    }
-
-    //Check for left
-    fightMonitorLeft = (clickedRow, clickedColumn) => {
-        let row = clickedRow;
-        let col = clickedColumn;
-
-        for (let i = 1; i <= 1; i++) {
-            col = col - 1;
-            if (col < 0) {
-                break; //Break loop if we move out of the map
-            }
-            // If there's a player we call for the fight function
-            if (this.map[row][col].player) {
-                console.log("there's a player on left");
-                window.location.href = "#fight-modal";
-                //calling for the fight
-                theBoard.fight();
-                break;
-            }
-
-        }
-
-    }
-
-    //Check for fight right
-    fightMonitorRight = (clickedRow, clickedColumn) => {
-        let row = clickedRow;
-        let col = clickedColumn;
-
-        for (let i = 1; i <= 1; i++) {
-            col = col + 1;
-            if (col >= 10) {
-                break; //Break loop if we move out of the map
-            }
-            // If there's a player we call for the fight function
-            if (this.map[row][col].player) {
-                console.log("there's a player on right");
-                window.location.href = "#fight-modal";
-                //calling for the fight
-                theBoard.fight();
-                break;
-            }
-        }
-
-
-    }
-
-    //Check to start fight
-    checkToStartFight = (clickedRow, clickedColumn) => {
-
-        this.fightMonitorUp(clickedRow, clickedColumn);
-        this.fightMonitorDown(clickedRow, clickedColumn);
-        this.fightMonitorRight(clickedRow, clickedColumn);
-        this.fightMonitorLeft(clickedRow, clickedColumn);
-
-
-    }
+    //     if (row < 9 && this.map[row + 1][col].player == true) {
+    //         console.log("there's a player down");
+    //             window.location.href = "#fight-modal";
+    //             //calling for the fight
+    //             theBoard.fight();
+    //     } else if (row > 0 && this.map[row - 1][col].player == true) {
+    //         console.log("there's a player on top");
+    //             window.location.href = "#fight-modal";
+    //             //calling for the fight
+    //             theBoard.fight();
+    //     } else if (col < 9 && this.map[row][col + 1].player == true) {
+    //         console.log("there's a player on right");
+    //         window.location.href = "#fight-modal";
+    //         //calling for the fight
+    //         theBoard.fight();
+    //     } else if (col > 0 && this.map[row][col - 1].player == true) {
+    //         console.log("there's a player on left");
+    //             window.location.href = "#fight-modal";
+    //             //calling for the fight
+    //             theBoard.fight();
+    //     }
+    // }
 
     //Calculate movable cells of current player
     calculateMovableCells = () => {
@@ -586,127 +508,8 @@ class Board {
 
     }
 
-    fight = () => {
-        //Event Listerners for the fight
-        let playerName = this.currentTurn;
-        //Player's life
-        let Player1Life = 100;
-        let Player2Life = 100;
-        //Keeping track if the player has defended or not
-        let Player1Defend = false;
-        let Player2Defend = false;
-
-
-        $('#Player1-attack').click(function () {
-            let currentPlayer = playerStore.find((playerObj) => {
-                return playerObj.name == playerName
-            });
-            //In case the player has defended
-            if (Player2Defend === true) {
-                Player2Life -= currentPlayer.attack / 2;
-                $('.Player2-life').text(Player2Life);
-                Player2Defend = false;
-            } else {
-                //In case the player hasn't defended
-                Player2Life -= currentPlayer.attack;
-                $('.Player2-life').text(Player2Life);
-            }
-            //When the opponent's player's life is less than or equal to 0 declare winner
-            if (Player2Life <= 0) {
-                console.log("Player 1 wins");
-                $("#winner-avatar").append('<img class="player-player1" src="assets/img/player1-poster.png" alt="Player-1">')
-                $("#winner").text("Player 1 Wins");
-                window.location.href = "#gameover-modal"; //Calling for the gameover modal
-            }
-            playerName = 'Player2'
-            handleButtons(playerName);
-        });
-
-        $('#Player1-defend').click(function () {
-            Player1Defend = true; //Player 1 defending
-            playerName = 'Player2'
-            handleButtons(playerName);
-        });
-
-        $('#Player2-attack').click(function () {
-            let currentPlayer = playerStore.find((playerObj) => {
-                return playerObj.name == playerName
-            });
-            //In case the player has defended
-            if (Player1Defend === true) {
-                Player1Life -= currentPlayer.attack / 2;
-                $('.Player1-life').text(Player1Life);
-                Player1Defend = false;
-            } else {
-                //In case the player hasn't defended
-                Player1Life -= currentPlayer.attack;
-                $('.Player1-life').text(Player1Life);
-            }
-            //When the opponent's player's life is less than or equal to 0 declare winner
-            if (Player1Life <= 0) {
-                console.log("Player 2 wins");
-                $("#winner-avatar").append('<img class="player-poster2" src="assets/img/player2-poster.png" alt="Player-2">')
-                $("#winner").text("Player 2 Wins");
-                window.location.href = "#gameover-modal"; //Calling for the gameover modal
-            }
-            playerName = 'Player1'
-            handleButtons(playerName);
-        });
-
-        $('#Player2-defend').click(function () {
-            Player2Defend = true; //Player 2 defending
-            playerName = 'Player1'
-            handleButtons(playerName);
-        });
-        //Calling for the styling function for the buttons
-        handleButtons(playerName);
-
-    }
-
 } //end of class
 
-
-//To handle the styling of the buttons
-handleButtons = (player) => {
-    if (player == 'Player1') {
-        $('#Player1-attack').css("opacity", "1");
-        $('#Player1-defend').css("opacity", "1");
-
-        $('#Player2-attack').css("opacity", ".5");
-        $('#Player2-defend').css("opacity", ".5");
-
-        $('#Player1-attack').css("cursor", "auto");
-        $('#Player1-defend').css("cursor", "auto");
-
-        $('#Player2-attack').css("cursor", "not-allowed");
-        $('#Player2-defend').css("cursor", "not-allowed");
-
-        $('#Player1-attack').prop('disabled', false);
-        $('#Player1-defend').prop('disabled', false);
-
-        $('#Player2-attack').prop('disabled', true);
-        $('#Player2-defend').prop('disabled', true);
-
-    } else {
-        $('#Player2-attack').css("opacity", "1");
-        $('#Player2-defend').css("opacity", "1");
-
-        $('#Player1-attack').css("opacity", ".5");
-        $('#Player1-defend').css("opacity", ".5");
-
-        $('#Player2-attack').css("cursor", "auto");
-        $('#Player2-defend').css("cursor", "auto");
-
-        $('#Player1-attack').css("cursor", "not-allowed");
-        $('#Player1-defend').css("cursor", "not-allowed");
-
-        $('#Player2-attack').prop('disabled', false);
-        $('#Player2-defend').prop('disabled', false);
-
-        $('#Player1-attack').prop('disabled', true);
-        $('#Player1-defend').prop('disabled', true);
-    }
-}
 
 
 
@@ -721,6 +524,7 @@ $(document).ready(function () {
     theBoard = new Board(10);
     theBoard.createGrid();
 
+    //function in the gamestore.js file
     createWeaponsStore(); //Calling the Weapon store function in my class
     console.log(weaponsStore);
     //Looping to display weapons on map 
@@ -728,6 +532,7 @@ $(document).ready(function () {
         theBoard.placeWeaponElement(randomRAC(), randomRAC(), weaponsStore[weapon].image, weapon);
     }
 
+    //function in the gamestore.js file
     createPlayerStore(); //Calling the Player store in my class
     playerStore.forEach(player => {
         theBoard.placePlayerElement(randomRAC(), randomRAC(), player.image, player.name);
@@ -782,16 +587,13 @@ $(document).ready(function () {
             //update player position
             theBoard.placePlayerElement(parseInt(clickedRow), parseInt(clickedColumn), currentPlayer.image, currentPlayer.name);
 
-            //Check if player is beside to start fight
-            theBoard.checkToStartFight(parseInt(clickedRow), parseInt(clickedColumn));
+            //Check if player is beside to start fight 
+            //Function in the fight.js file
+            checkToStartFight(parseInt(clickedRow), parseInt(clickedColumn));
 
             console.log(`Row is ${clickedRow}, Column is ${clickedColumn}`);
             theBoard.currentTurn = theBoard.currentTurn == 'Player1' ? 'Player2' : 'Player1';
             theBoard.calculateMovableCells();
-
-
-
-
 
         }
     })

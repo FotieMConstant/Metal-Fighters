@@ -1,5 +1,5 @@
 //Weapon and player store
-   function createWeaponsStore() {
+function createWeaponsStore() {
     //update waeponsStore to have  multiple  key with values as objects. the name of the keys will be weapon names. the values   will hold details of the weapon
     // like attack, defend Initially set them to null
     weaponsStore = {
@@ -45,7 +45,8 @@
         },
     }
 }
-function createPlayerStore(){
+
+function createPlayerStore() {
     //update playerStore to have two key with values as objects. those will hold details of the player
     // like player attack, defend, position etc. Initially set them to null
 
