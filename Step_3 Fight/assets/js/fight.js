@@ -58,10 +58,14 @@ function fight() {
         }
         playerName = 'Player2'
         handleButtons(playerName);
+        Player1Defend = false;
+        $('#defence-player1').text(Player1Defend);
+
     });
 
     $('#Player1-defend').click(function () {
         Player1Defend = true; //Player 1 defending
+        $('#defence-player1').text(Player1Defend);
         playerName = 'Player2'
         handleButtons(playerName);
     });
@@ -89,10 +93,14 @@ function fight() {
         }
         playerName = 'Player1'
         handleButtons(playerName);
+        Player2Defend = false;
+        $('#defence-player2').text(Player2Defend);
+
     });
 
     $('#Player2-defend').click(function () {
         Player2Defend = true; //Player 2 defending
+        $('#defence-player2').text(Player2Defend);
         playerName = 'Player1'
         handleButtons(playerName);
     });
