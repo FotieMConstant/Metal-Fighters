@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <title>Metal Fighters - OpenClassrooms</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+  <h1 class="text header">Metal Fighters</h1>
+  <div class="header">
+    <button id="new-game" class="button blue" title="Start new game">New game</button>
+    <a href="#rules-modal"><button id="rules" class="button yellow" title="View game rule">Game rules</button></a>
+
+    <ul class="weapons">
+      <li>
+        <div class="name">Axe</div>
+        <img src="assets/img/weapons/axe.png" alt="axe">
+        <div class="damage">Damage: 40</div>
+      </li>
+      <li>
+        <div class="name">Fork</div>
+        <img src="assets/img/weapons/fork.png" alt="axe">
+        <div class="damage">Damage: 10</div>
+      </li>
+      <li>
+        <div class="name">Gun</div>
+        <img src="assets/img/weapons/gun.png" alt="axe">
+        <div class="damage">Damage: 50</div>
+      </li>
+      <li>
+        <div class="name">Knife</div>
+        <img src="assets/img/weapons/knife.png" alt="axe">
+        <div class="damage">Damage: 30</div>
+      </li>
+      <li>
+        <div class="name">Sword</div>
+        <img src="assets/img/weapons/sword.png" alt="axe">
+        <div class="damage">Damage: 20</div>
+      </li>
+    </ul>
+
+  </div>
+
+  <!--Player 1 -->
+    <div id="player1" class="player-info">
+      <div class="text">
+        <h2>Player 1</h2>
+      </div>
+      <img class="player-player1" src="assets/img/player1-poster.png" alt="Player-1">
+      <div class="life-points"><strong>Life points: </strong><span class="Player1-life">100</span></div>
+      <div style="margin-left:30%; width: 76px; height: 76px; background: url('assets/img/weapons/fork.png')" class="attack-weapon-player1"> </div>
+      <div><strong>Attack power: </strong> <span class="attack-power-player1">10</span></div>
+
+    </div>
+
+  <!-- Map container-->
+  <div id="container"></div>
+
+  <!--Player 2 -->
+  <div id="player2" class="player-info">
+    <div class="text">
+      <h2>Player 2</h2>
+    </div>
+    <img class="player-poster2" src="assets/img/player2-poster.png" alt="Player-2">
+    <div class="life-points"><strong>Life points:</strong> <span class="Player2-life">100</span></div>
+    <div style="margin-left:35%; width: 76px; height: 76px; background: url('assets/img/weapons/fork.png')" class="attack-weapon-player2"> </div>
+    <div><strong>Attack power: </strong><span class="attack-power-player2">10</span></div>
+
+  </div>
+
+  <!--modals for rules-->
+  <div id="rules-modal" class="modalDialog">
+    <div>
+      <a href="#close" title="Close" class="close">X</a>
+      <h2 align="center">Game Rules!</h2>
+      <hr>
+      <p>
+        <h4>Begin the battle between two players...</h4>
+        <ul>
+
+          <li> You can move a maximum  one to three boxes (horizontally or vertically) before ending your turn..</li>
+
+          <li> You can collect weapons and increase your damage score.</li>
+
+          <li>The aim of the game is to gain a high weapon damage score and attack the other player.</li>
+
+          <li>Once you are next to them you can attack or defend.</li>
+
+        </ul>
+        Good Luck!
+      </p>
+    </div>
+  </div>
+
+  <!--modals for gameover-->
+  <div align="center" id="gameover-modal" class="modalDialog">
+    <div>
+      <a href="#close" title="Close" class="close">X</a>
+      <h2>Game Over!</h2>
+      <hr>
+      <p>
+        <h4>Fight Ends</h4>
+        <div id="winner-avatar"></div>
+       <h2><div id="winner"></div></h2> 
+       <a href="index.html"><button class="button green" title="Start new game">New game</button></a>
+      </p>
+    </div>
+  </div>
+
+
+<!--modals for fight-->
+  <div id="fight-modal" class="modalDialog">
+      <div>
+         <a href="index.html" title="Close" class="close">X</a>
+         <h2 align="center">Fight!</h2>
+          <hr>
+         <div id="player1-position" class="player-battle">
+          <div class="text">
+            <h2>Player 1</h2>
+          </div>
+          <img class="player-player1" src="assets/img/player1-poster.png" alt="Player-1">
+          <div class="life-points"><strong>Life points: </strong><span class="Player1-life">100</span></div>
+          <div style="margin-left:35%; width: 76px; height: 76px; background: url('assets/img/weapons/fork.png')" class="attack-weapon-player1"> </div>
+          <div><strong>Attack power: </strong> <span class="attack-power-player1">10</span></div>
+          <div class="defence"><strong>Defence:</strong> <span id="defence-player1">false</span></div><br>
+          <button id="Player1-attack" class="button red">Attack</button> <button id="Player1-defend" class="button blue">Defend</button>
+        </div>
+        
+              <!--Player 2 -->
+        <div id="player2-position" class="player-battle">
+          <div class="text">
+            <h2>Player 2</h2>
+          </div>
+          <img class="player-poster2" src="assets/img/player2-poster.png" alt="Player-2">
+          <div class="life-points"><strong>Life points:</strong> <span class="Player2-life">100</span> </div>
+          <div style="margin-left:35%; width: 76px; height: 76px; background: url('assets/img/weapons/fork.png')" class="attack-weapon-player2"> </div>
+          <div><strong>Attack power: </strong> <span class="attack-power-player2">10</span></div>
+          <div class="defence"><strong>Defence:</strong> <span id="defence-player2">false</span></div> <br>
+          <button id="Player2-attack" class="button red">Attack</button> <button id="Player2-defend" class="button blue">Defend</button>
+        </div>
+
+        </div>
+   </div>
+
+
+  <footer class="text">Copyright 2020 - OpenClassrooms Project 6 </footer>
+
+
+
+
+</body>
+
+<!-- Calling the scripts for the page-->
+<script src="assets/js/gamestore.js"></script>
+<script src="assets/js/fight.js"></script>
+<script src="assets/js/movements.js"></script>
+<script src="assets/js/board.js"></script>
+
+</html>
